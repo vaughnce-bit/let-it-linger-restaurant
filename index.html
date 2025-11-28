@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Let It Linger(LIL) - Fine Dining Restaurant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        burgundy: '#800020',
+                        cream: '#F5F5DC',
+                        gold: '#D4AF37'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Floating quick-nav (subtle and consistent) */
+        .circular-nav {
+            position: fixed;
+            right: 24px;
+            bottom: 24px;
+            width: 56px;
+            height: 56px;
+            background: rgba(128,0,32,0.95);
+            color: #F5F5DC;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+            transition: transform .22s ease, box-shadow .22s ease;
+            z-index: 1000;
+        }
+
+        .circular-nav:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.22); }
+
+        .nav-toggle { font-size: 20px; font-weight: 700; background: transparent; border: none; color: inherit; }
+
+        .nav-items { position: absolute; bottom: 74px; right: 0; display: flex; flex-direction: column; gap: 10px; align-items: flex-end; opacity: 0; transform: translateY(6px) scale(.98); transition: opacity .22s ease, transform .22s ease; pointer-events: none; }
+        .circular-nav.open .nav-items { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+
+        .nav-item { width: 44px; height: 44px; border-radius: 10px; background: #fff; color: #800020; display:flex; align-items:center; justify-content:center; text-decoration:none; box-shadow: 0 6px 14px rgba(0,0,0,0.12); font-size: 18px; }
+        .nav-item:hover { background: #D4AF37; color: #800020; transform: translateX(-4px); }
+
+        /* Ensure content doesn't get hidden behind the nav */
+        body { padding-bottom: 100px; }
+        /* Mobile dropdown enhancement */
+        .mobile-menu-box {
+            position: absolute;
+            right: 1rem;
+            top: 4.5rem;
+            width: 14rem;
+            background: white;
+            color: #2d2d2d;
+            border-radius: 0.75rem;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+            overflow: hidden;
+            transform-origin: top right;
+            transition: transform 260ms ease, opacity 260ms ease;
+            opacity: 0;
+            transform: translateY(-6px) scale(0.98);
+            z-index: 60;
+        }
+        .mobile-menu-box.open {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        .mobile-menu-box a { display:block; padding:0.6rem 1rem; color:#4a2b2b; }
+        .mobile-menu-box a:hover { background: #f6eee9; color:#800020 }
+    </style>
+</head>
+<body class="font-sans text-gray-800">
+    <!-- Navigation -->
+    <nav class="bg-burgundy text-white fixed w-full z-50 shadow-lg">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="text-2xl font-bold text-gold">Let It Linger</div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="hover:text-gold transition">Home</a>
+                    <a href="about.html" class="hover:text-gold transition">About</a>
+                    <a href="menu.html" class="hover:text-gold transition">Menu</a>
+                    <a href="gallery.html" class="hover:text-gold transition">Gallery</a>
+                    <a href="reservations.html" class="hover:text-gold transition">Reservations</a>
+                    <a href="contact.html" class="hover:text-gold transition">Contact</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" aria-expanded="false" class="md:hidden focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="mobile-menu-box md:hidden">
+                <a href="index.html" class="font-semibold">Home</a>
+                <a href="about.html">About</a>
+                <a href="menu.html">Menu</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="reservations.html">Reservations</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </div>
+    </nav>
+<!-- Hero Section -->
+<section class="relative h-screen flex items-center justify-center text-white pt-20 overflow-hidden">
+    <!-- Video Background -->
+    <div class="absolute inset-0 w-full h-full z-0">
+        <video 
+            autoplay 
+            muted 
+            loop 
+            playsinline
+            class="w-full h-full object-cover"
+        >
+            <source src="media/saltonpizza30fps.mp4" type="video/mp4">
+        </video>
+        <!-- Gradient Overlay -->
+        <div class="absolute inset-0 bg-gradient-to-r from-burgundy to-red-900 opacity-75"></div>
+    </div>
+    
+    <!-- Content -->
+    <div class="text-center px-6 z-10 relative">
+        <h1 class="text-5xl md:text-7xl font-bold mb-4">Let It Linger</h1>
+        <p class="text-xl md:text-2xl mb-8 text-cream">Where Every Moment is Savored</p>
+        <div class="space-x-4">
+            <a href="menu.html" class="bg-gold text-burgundy px-8 py-3 rounded-full font-semibold hover:bg-yellow-500 transition inline-block">View Menu</a>
+            <a href="reservations.html" class="bg-transparent border-2 border-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-burgundy transition inline-block">Book a Table</a>
+        </div>
+    </div>
+</section>
+
+    <!-- Welcome Section -->
+    <section class="py-20 bg-cream">
+        <div class="container mx-auto px-6">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-4xl font-bold text-burgundy mb-6">Welcome to Let It Linger "LIL"</h2>
+                <p class="text-lg text-gray-700 leading-relaxed mb-8">
+                    Experience the art of fine dining where culinary excellence meets warm hospitality. 
+                    Our carefully crafted dishes invite you to slow down, savor each bite, and let the 
+                    flavors linger on your palate.
+                </p>
+                <a href="about.html" class="text-burgundy font-semibold hover:text-gold transition">Learn More About Us →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Dishes -->
+<section class="py-20 bg-white">
+    <div class="container mx-auto px-6">
+        <h2 class="text-4xl font-bold text-center text-burgundy mb-12">Signature Dishes</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Dish 1 -->
+            <div class="bg-cream rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition">
+                <div class="h-48 bg-gray-200 flex items-center justify-center overflow-hidden">
+                    <img src="media/cabab-800.jpg" alt="Premium Steak" class="w-full h-full object-cover" loading="lazy" decoding="async"
+                        srcset="media/cabab-400.jpg 400w, media/cabab-800.jpg 800w, media/cabab-1200.jpg 1200w"
+                        sizes="(max-width: 768px) 100vw, 33vw">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-2xl font-bold text-burgundy mb-2">Prime Grilled Steak</h3>
+                    <p class="text-gray-700">Expertly grilled prime cut, perfectly seared and seasoned</p>
+                </div>
+            </div>
+
+            <!-- Dish 2 -->
+            <div class="bg-cream rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition">
+                <div class="h-48 bg-gray-200 flex items-center justify-center overflow-hidden">
+                    <img src="media/lobster-800.jpg" alt="Lobster Thermidor" class="w-full h-full object-cover" loading="lazy" decoding="async"
+                        srcset="media/lobster-400.jpg 400w, media/lobster-800.jpg 800w, media/lobster-1200.jpg 1200w"
+                        sizes="(max-width: 768px) 100vw, 33vw">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-2xl font-bold text-burgundy mb-2">Lobster Thermidor</h3>
+                    <p class="text-gray-700">Classic French preparation with cognac cream sauce</p>
+                </div>
+            </div>
+
+            <!-- Dish 3 -->
+            <div class="bg-cream rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition">
+                <div class="h-48 bg-gray-200 flex items-center justify-center overflow-hidden">
+                    <img src="media/betterchocolatecake-800.jpg" alt="Chocolate Cake" class="w-full h-full object-cover" loading="lazy" decoding="async"
+                        srcset="media/betterchocolatecake-400.jpg 400w, media/betterchocolatecake-800.jpg 800w, media/betterchocolatecake-1200.jpg 1200w"
+                        sizes="(max-width: 768px) 100vw, 33vw">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-2xl font-bold text-burgundy mb-2">Decadent Chocolate Cake</h3>
+                    <p class="text-gray-700">Rich layers of dark chocolate with silky ganache and fresh berries</p>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-12">
+            <a href="menu.html" class="bg-burgundy text-white px-8 py-3 rounded-full font-semibold hover:bg-red-900 transition inline-block">Explore Full Menu</a>
+        </div>
+    </div>
+</section>
+
+    <!-- Hours & Location -->
+    <section class="py-20 bg-burgundy text-white">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-12 max-w-4xl mx-auto">
+                <div class="text-center">
+                    <h3 class="text-3xl font-bold mb-6 text-gold">Hours</h3>
+                    <div class="space-y-2 text-lg">
+                        <p><strong>Monday - Thursday:</strong> 5:00 PM - 10:00 PM</p>
+                        <p><strong>Friday - Saturday:</strong> 5:00 PM - 11:00 PM</p>
+                        <p><strong>Sunday:</strong> 4:00 PM - 9:00 PM</p>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <h3 class="text-3xl font-bold mb-6 text-gold">Location</h3>
+                    <p class="text-lg mb-4">123 Culinary Lane<br>Downtown District<br>City, State 12345</p>
+                    <a href="contact.html" class="text-gold hover:text-yellow-500 transition font-semibold">Get Directions →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8 text-center md:text-left">
+                <div>
+                    <h4 class="text-2xl font-bold text-gold mb-4">Let It Linger</h4>
+                    <p class="text-gray-400">Fine dining experience where memories are made.</p>
+                </div>
+                <div>
+                    <h5 class="text-lg font-semibold mb-4">Quick Links</h5>
+                    <div class="space-y-2">
+                        <a href="menu.html" class="block text-gray-400 hover:text-gold transition">Menu</a>
+                        <a href="reservations.html" class="block text-gray-400 hover:text-gold transition">Reservations</a>
+                        <a href="contact.html" class="block text-gray-400 hover:text-gold transition">Contact</a>
+                    </div>
+                </div>
+                <div>
+                    <h5 class="text-lg font-semibold mb-4">Follow Us</h5>
+                    <div class="flex justify-center md:justify-start space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-gold transition text-2xl">📘</a>
+                        <a href="#" class="text-gray-400 hover:text-gold transition text-2xl">📷</a>
+                        <a href="#" class="text-gray-400 hover:text-gold transition text-2xl">🐦</a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Let It Linger Restaurant. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Quick Nav (subtle) -->
+    <div class="circular-nav" aria-label="Quick navigation">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="floating-nav">☰</button>
+        <div class="nav-items" id="floating-nav" role="menu" aria-hidden="true">
+            <a href="index.html" class="nav-item" role="menuitem" title="Home">🏠</a>
+            <a href="about.html" class="nav-item" role="menuitem" title="About">👤</a>
+            <a href="menu.html" class="nav-item" role="menuitem" title="Menu">📋</a>
+            <a href="gallery.html" class="nav-item" role="menuitem" title="Gallery">🖼️</a>
+            <a href="reservations.html" class="nav-item" role="menuitem" title="Reservations">📅</a>
+            <a href="contact.html" class="nav-item" role="menuitem" title="Contact">�</a>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile menu functionality (enhanced)
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileBox = document.getElementById('mobile-menu');
+        mobileBtn.addEventListener('click', function(e) {
+            const open = mobileBox.classList.toggle('open');
+            mobileBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+            e.stopPropagation();
+        });
+        // close when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!mobileBox.contains(event.target) && !mobileBtn.contains(event.target)) {
+                mobileBox.classList.remove('open');
+                mobileBtn.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        // Floating quick-nav behavior (accessible)
+        (function(){
+            const root = document.querySelector('.circular-nav');
+            if (!root) return;
+            const toggle = root.querySelector('.nav-toggle');
+            const items = root.querySelector('.nav-items');
+            toggle.addEventListener('click', function(e) {
+                const open = root.classList.toggle('open');
+                toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+                items.setAttribute('aria-hidden', open ? 'false' : 'true');
+                e.stopPropagation();
+            });
+            document.addEventListener('click', function(e){
+                if (!root.contains(e.target)) {
+                    root.classList.remove('open');
+                    toggle.setAttribute('aria-expanded','false');
+                    items.setAttribute('aria-hidden','true');
+                }
+            });
+            document.addEventListener('keydown', function(e){
+                if (e.key === 'Escape') { root.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); items.setAttribute('aria-hidden','true'); }
+            });
+        })();
+    </script>
+</body>
+</html>

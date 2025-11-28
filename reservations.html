@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservations - Let It Linger</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        burgundy: '#800020',
+                        cream: '#F5F5DC',
+                        gold: '#D4AF37'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Floating quick-nav (subtle and consistent) */
+        .circular-nav {
+            position: fixed;
+            right: 24px;
+            bottom: 24px;
+            width: 56px;
+            height: 56px;
+            background: rgba(128,0,32,0.95);
+            color: #F5F5DC;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+            transition: transform .22s ease, box-shadow .22s ease;
+            z-index: 1000;
+        }
+
+        .circular-nav:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.22); }
+
+        .nav-toggle { font-size: 20px; font-weight: 700; background: transparent; border: none; color: inherit; cursor: pointer; }
+
+        .nav-items { position: absolute; bottom: 74px; right: 0; display: flex; flex-direction: column; gap: 10px; align-items: flex-end; opacity: 0; transform: translateY(6px) scale(.98); transition: opacity .22s ease, transform .22s ease; pointer-events: none; }
+        .circular-nav.open .nav-items { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+
+        .nav-item { width: 44px; height: 44px; border-radius: 10px; background: #fff; color: #800020; display:flex; align-items:center; justify-content:center; text-decoration:none; box-shadow: 0 6px 14px rgba(0,0,0,0.12); font-size: 18px; transition: all 0.2s ease; }
+        .nav-item:hover { background: #D4AF37; color: #800020; transform: translateX(-4px); }
+    </style>
+</head>
+<body class="font-sans text-gray-800">
+    <!-- Navigation -->
+    <nav class="bg-burgundy text-white fixed w-full z-50 shadow-lg">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="text-2xl font-bold text-gold">Let It Linger</div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="hover:text-gold transition">Home</a>
+                    <a href="about.html" class="hover:text-gold transition">About</a>
+                    <a href="menu.html" class="hover:text-gold transition">Menu</a>
+                    <a href="gallery.html" class="hover:text-gold transition">Gallery</a>
+                    <a href="reservations.html" class="hover:text-gold transition border-b-2 border-gold">Reservations</a>
+                    <a href="contact.html" class="hover:text-gold transition">Contact</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4">
+                <a href="index.html" class="block py-2 hover:text-gold transition">Home</a>
+                <a href="about.html" class="block py-2 hover:text-gold transition">About</a>
+                <a href="menu.html" class="block py-2 hover:text-gold transition">Menu</a>
+                <a href="gallery.html" class="block py-2 hover:text-gold transition">Gallery</a>
+                <a href="reservations.html" class="block py-2 hover:text-gold transition">Reservations</a>
+                <a href="contact.html" class="block py-2 hover:text-gold transition">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="bg-gradient-to-r from-burgundy to-red-900 text-white pt-32 pb-20">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-5xl md:text-6xl font-bold mb-4">Make a Reservation</h1>
+            <p class="text-xl text-cream">Secure your table for an unforgettable dining experience</p>
+        </div>
+    </section>
+
+    <!-- Reservation Form Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <div class="grid md:grid-cols-2 gap-12">
+                <!-- Reservation Form -->
+                <div class="bg-cream p-8 rounded-lg shadow-lg">
+                    <h2 class="text-3xl font-bold text-burgundy mb-6">Book Your Table</h2>
+                    <form id="reservation-form" class="space-y-4">
+                        <!-- Name -->
+                        <div>
+                            <label for="name" class="block text-burgundy font-semibold mb-2">Full Name *</label>
+                            <input 
+                                type="text" 
+                                id="name" 
+                                name="name" 
+                                required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-burgundy">
+                        </div>
+
+                        <!-- Email -->
+                        <div>
+                            <label for="email" class="block text-burgundy font-semibold mb-2">Email *</label>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                name="email" 
+                                required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-burgundy">
+                        </div>
+
+                        <!-- Phone -->
+                        <div>
+                            <label for="phone" class="block text-burgundy font-semibold mb-2">Phone Number *</label>
+                            <input 
+                                type="tel" 
+                                id="phone" 
+                                name="phone" 
+                                required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-burgundy">
+                        </div>
+
+                        <!-- Date -->
+                        <div>
+                            <label for="date" class="block text-burgundy font-semibold mb-2">Date *</label>
+                            <input 
+                                type="date" 
+                                id="date" 
+                                name="date" 
+                                required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-burgundy">
+                        </div>
+
+                        <!-- Time -->
+                        <div>
+                            <label for="time" class="block text-burgundy font-semibold mb-2">Time *</label>
+                            <select 
+                                id="time" 
+                                name="time" 
+                                required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-burgundy">
+                                <option value="">Select a time</option>
+                                <option value="17:00">5:00 PM</option>
+                                <option value="17:30">5:30 PM</option>
+                                <option value="18:00">6:00 PM</option>
+                                <option value="18:30">6:30 PM</option>
+                                <option value="19:00">7:00 PM</option>
+                                <option value="19:30">7:30 PM</option>
+                                <option value="20:00">8:00 PM</option>
+                                <option value="20:30">8:30 PM</option>
+                                <option value="21:00">9:00 PM</option>
+                                <option value="21:30">9:30 PM</option>
+                            </select>
+                        </div>
+
+                        <!-- Number of Guests -->
+                        <div>
+                            <label for="guests" class="block text-burgundy font-semibold mb-2">Number of Guests *</label>
+                            <select 
+                                id="guests" 
+                                name="guests" 
+                                required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-burgundy">
+                                <option value="">Select party size</option>
+                                <option value="1">1 Guest</option>
+                                <option value="2">2 Guests</option>
+                                <option value="3">3 Guests</option>
+                                <option value="4">4 Guests</option>
+                                <option value="5">5 Guests</option>
+                                <option value="6">6 Guests</option>
+                                <option value="7">7+ Guests</option>
+                            </select>
+                        </div>
+
+                        <!-- Special Requests -->
+                        <div>
+                            <label for="special-requests" class="block text-burgundy font-semibold mb-2">Special Requests</label>
+                            <textarea 
+                                id="special-requests" 
+                                name="special-requests" 
+                                rows="3"
+                                placeholder="Dietary restrictions, celebration, seating preferences..."
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-burgundy"></textarea>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button 
+                            type="submit" 
+                            class="w-full bg-burgundy text-white py-3 rounded-lg font-semibold hover:bg-red-900 transition">
+                            Reserve Your Table
+                        </button>
+
+                        <p class="text-sm text-gray-600 text-center">* Required fields</p>
+                    </form>
+
+                    <!-- Success Message -->
+                    <div id="success-message" class="hidden mt-6 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg">
+                        <strong>Success!</strong> Your reservation request has been received. We'll confirm via email shortly.
+                    </div>
+                </div>
+
+                <!-- Information Sidebar -->
+                <div class="space-y-8">
+                    <!-- Hours -->
+                    <div class="bg-cream p-8 rounded-lg shadow-lg">
+                        <h3 class="text-2xl font-bold text-burgundy mb-4 flex items-center">
+                            <span class="text-3xl mr-3">🕐</span>
+                            Hours of Operation
+                        </h3>
+                        <div class="space-y-2 text-gray-700">
+                            <p><strong>Monday - Thursday:</strong><br>5:00 PM - 10:00 PM</p>
+                            <p><strong>Friday - Saturday:</strong><br>5:00 PM - 11:00 PM</p>
+                            <p><strong>Sunday:</strong><br>4:00 PM - 9:00 PM</p>
+                        </div>
+                    </div>
+
+                    <!-- Policies -->
+                    <div class="bg-cream p-8 rounded-lg shadow-lg">
+                        <h3 class="text-2xl font-bold text-burgundy mb-4 flex items-center">
+                            <span class="text-3xl mr-3">📋</span>
+                            Reservation Policies
+                        </h3>
+                        <ul class="space-y-3 text-gray-700">
+                            <li class="flex items-start">
+                                <span class="text-gold mr-2">•</span>
+                                <span>Reservations are held for 15 minutes past the reservation time</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-gold mr-2">•</span>
+                                <span>For parties of 7 or more, please call us directly</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-gold mr-2">•</span>
+                                <span>Cancellations must be made 24 hours in advance</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-gold mr-2">•</span>
+                                <span>Smart casual dress code recommended</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Contact Info -->
+                    <div class="bg-cream p-8 rounded-lg shadow-lg">
+                        <h3 class="text-2xl font-bold text-burgundy mb-4 flex items-center">
+                            <span class="text-3xl mr-3">📞</span>
+                            Need Assistance?
+                        </h3>
+                        <div class="space-y-3 text-gray-700">
+                            <p><strong>Phone:</strong><br>+1 (868) 492-9374</p>
+                            <p><strong>Email:</strong><br>reservations@letitlinger.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location Section -->
+    <section class="py-20 bg-cream">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-burgundy text-center mb-12">Find Us</h2>
+            <div class="max-w-4xl mx-auto">
+                <!-- Map Placeholder -->
+                <div class="bg-gradient-to-br from-gray-300 to-gray-400 h-96 rounded-lg shadow-lg flex items-center justify-center mb-8">
+                    <div class="text-center text-gray-700">
+                        <span class="text-6xl mb-4 block">📍</span>
+                        <p class="text-xl font-semibold">123 Culinary Lane</p>
+                        <p class="text-lg">Downtown District</p>
+                        <p class="text-lg">City, State 12345</p>
+                    </div>
+                </div>
+
+                <!-- Directions -->
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-lg shadow text-center">
+                        <span class="text-4xl mb-3 block">🚗</span>
+                        <h4 class="font-bold text-burgundy mb-2">Parking</h4>
+                        <p class="text-gray-700 text-sm">Valet available. Street parking nearby.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow text-center">
+                        <span class="text-4xl mb-3 block">🚇</span>
+                        <h4 class="font-bold text-burgundy mb-2">Public Transit</h4>
+                        <p class="text-gray-700 text-sm">2 blocks from Central Station</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow text-center">
+                        <span class="text-4xl mb-3 block">♿</span>
+                        <h4 class="font-bold text-burgundy mb-2">Accessibility</h4>
+                        <p class="text-gray-700 text-sm">Wheelchair accessible entrance</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8 text-center md:text-left">
+                <div>
+                    <h4 class="text-2xl font-bold text-gold mb-4">Let It Linger</h4>
+                    <p class="text-gray-400">Fine dining experience where memories are made.</p>
+                </div>
+                <div>
+                    <h5 class="text-lg font-semibold mb-4">Quick Links</h5>
+                    <div class="space-y-2">
+                        <a href="menu.html" class="block text-gray-400 hover:text-gold transition">Menu</a>
+                        <a href="reservations.html" class="block text-gray-400 hover:text-gold transition">Reservations</a>
+                        <a href="contact.html" class="block text-gray-400 hover:text-gold transition">Contact</a>
+                    </div>
+                </div>
+                <div>
+                    <h5 class="text-lg font-semibold mb-4">Follow Us</h5>
+                    <div class="flex justify-center md:justify-start space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-gold transition text-2xl">📘</a>
+                        <a href="#" class="text-gray-400 hover:text-gold transition text-2xl">📷</a>
+                        <a href="#" class="text-gray-400 hover:text-gold transition text-2xl">🐦</a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Let It Linger Restaurant. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Quick Nav (subtle) -->
+    <div class="circular-nav" aria-label="Quick navigation">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="floating-nav">☰</button>
+        <div class="nav-items" id="floating-nav" role="menu" aria-hidden="true">
+            <a href="index.html" class="nav-item" role="menuitem" title="Home">🏠</a>
+            <a href="about.html" class="nav-item" role="menuitem" title="About">👤</a>
+            <a href="menu.html" class="nav-item" role="menuitem" title="Menu">📋</a>
+            <a href="gallery.html" class="nav-item" role="menuitem" title="Gallery">🖼️</a>
+            <a href="reservations.html" class="nav-item" role="menuitem" title="Reservations">📅</a>
+            <a href="contact.html" class="nav-item" role="menuitem" title="Contact">📧</a>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/script.js"></script>
+    <script>
+        // Floating quick-nav behavior (accessible)
+        (function(){
+            const root = document.querySelector('.circular-nav');
+            if (!root) return;
+            const toggle = root.querySelector('.nav-toggle');
+            const items = root.querySelector('.nav-items');
+            toggle.addEventListener('click', function(e) {
+                const open = root.classList.toggle('open');
+                toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+                items.setAttribute('aria-hidden', open ? 'false' : 'true');
+                e.stopPropagation();
+            });
+            document.addEventListener('click', function(e){
+                if (!root.contains(e.target)) {
+                    root.classList.remove('open');
+                    toggle.setAttribute('aria-expanded','false');
+                    items.setAttribute('aria-hidden','true');
+                }
+            });
+            document.addEventListener('keydown', function(e){
+                if (e.key === 'Escape') { root.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); items.setAttribute('aria-hidden','true'); }
+            });
+        })();
+    </script>
+</body>
+</html>

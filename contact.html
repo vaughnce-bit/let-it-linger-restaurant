@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Let It Linger</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        burgundy: '#800020',
+                        cream: '#F5F5DC',
+                        gold: '#D4AF37'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Floating quick-nav (subtle and consistent) */
+        .circular-nav {
+            position: fixed;
+            right: 24px;
+            bottom: 24px;
+            width: 56px;
+            height: 56px;
+            background: rgba(128,0,32,0.95);
+            color: #F5F5DC;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+            transition: transform .22s ease, box-shadow .22s ease;
+            z-index: 1000;
+        }
+
+        .circular-nav:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.22); }
+
+        .nav-toggle { font-size: 20px; font-weight: 700; background: transparent; border: none; color: inherit; cursor: pointer; }
+
+        .nav-items { position: absolute; bottom: 74px; right: 0; display: flex; flex-direction: column; gap: 10px; align-items: flex-end; opacity: 0; transform: translateY(6px) scale(.98); transition: opacity .22s ease, transform .22s ease; pointer-events: none; }
+        .circular-nav.open .nav-items { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+
+        .nav-item { width: 44px; height: 44px; border-radius: 10px; background: #fff; color: #800020; display:flex; align-items:center; justify-content:center; text-decoration:none; box-shadow: 0 6px 14px rgba(0,0,0,0.12); font-size: 18px; transition: all 0.2s ease; }
+        .nav-item:hover { background: #D4AF37; color: #800020; transform: translateX(-4px); }
+    </style>
+</head>
+<body class="font-sans text-gray-800">
+    <!-- Navigation -->
+    <nav class="bg-burgundy text-white fixed w-full z-50 shadow-lg">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="text-2xl font-bold text-gold">Let It Linger</div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="hover:text-gold transition">Home</a>
+                    <a href="about.html" class="hover:text-gold transition">About</a>
+                    <a href="menu.html" class="hover:text-gold transition">Menu</a>
+                    <a href="gallery.html" class="hover:text-gold transition">Gallery</a>
+                    <a href="reservations.html" class="hover:text-gold transition">Reservations</a>
+                    <a href="contact.html" class="hover:text-gold transition border-b-2 border-gold">Contact</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4">
+                <a href="index.html" class="block py-2 hover:text-gold transition">Home</a>
+                <a href="about.html" class="block py-2 hover:text-gold transition">About</a>
+                <a href="menu.html" class="block py-2 hover:text-gold transition">Menu</a>
+                <a href="gallery.html" class="block py-2 hover:text-gold transition">Gallery</a>
+                <a href="reservations.html" class="block py-2 hover:text-gold transition">Reservations</a>
+                <a href="contact.html" class="block py-2 hover:text-gold transition">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="bg-gradient-to-r from-burgundy to-red-900 text-white pt-32 pb-20">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-5xl md:text-6xl font-bold mb-4">Get in Touch</h1>
+            <p class="text-xl text-cream">We'd love to hear from you</p>
+        </div>
+    </section>
+
+    <!-- Contact Information -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <div class="grid md:grid-cols-3 gap-8 mb-16">
+                <!-- Phone -->
+                <div class="bg-cream p-8 rounded-lg shadow-lg text-center transform hover:scale-105 transition">
+                    <div class="text-6xl mb-4">📞</div>
+                    <h3 class="text-2xl font-bold text-burgundy mb-3">Phone</h3>
+                    <p class="text-gray-700 mb-2">Give us a call</p>
+                    <a href="tel:18684929374" class="text-gold font-semibold hover:underline">+1 (868) 492-9374</a>
+                </div>
+
+                <!-- Email -->
+                <div class="bg-cream p-8 rounded-lg shadow-lg text-center transform hover:scale-105 transition">
+                    <div class="text-6xl mb-4">📧</div>
+                    <h3 class="text-2xl font-bold text-burgundy mb-3">Email</h3>
+                    <p class="text-gray-700 mb-2">Send us a message</p>
+                    <a href="mailto:info@letitlinger.com" class="text-gold font-semibold hover:underline">info@letitlinger.com</a>
+                </div>
+
+                <!-- Address -->
+                <div class="bg-cream p-8 rounded-lg shadow-lg text-center transform hover:scale-105 transition">
+                    <div class="text-6xl mb-4">📍</div>
+                    <h3 class="text-2xl font-bold text-burgundy mb-3">Address</h3>
+                    <p class="text-gray-700">123 Culinary Lane<br>Downtown District<br>City, State 12345</p>
+                </div>
+            </div>
+
+            <!-- Contact Form and Map -->
+            <div class="grid md:grid-cols-2 gap-12">
+                <!-- Contact Form -->
+                <div>
+                    <h2 class="text-3xl font-bold text-burgundy mb-6">Send Us a Message</h2>
+                    <form id="contact-form" class="space-y-4">
+                        <!-- Name -->
+                        <div>
+                            <label for="contact-name" class="block text-burgundy font-semibold mb-2">Name *</label>
+                            <input 
+                                type="text" 
+                                id="contact-name" 
+                                name="name" 
+                                required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-burgundy">
+                        </div>
+
+                        <!-- Email -->
+                        <div>
+                            <label for="contact-email" class="block text-burgundy font-semibold mb-2">Email *</label>
+                            <input 
+                                type="email" 
+                                id="contact-email" 
+                                name="email" 
+                                required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-burgundy">
+                        </div>
+
+                        <!-- Subject -->
+                        <div>
+                            <label for="subject" class="block text-burgundy font-semibold mb-2">Subject *</label>
+                            <select 
+                                id="subject" 
+                                name="subject" 
+                                required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-burgundy">
+                                <option value="">Select a subject</option>
+                                <option value="general">General Inquiry</option>
+                                <option value="reservation">Reservation Question</option>
+                                <option value="private-event">Private Event</option>
+                                <option value="feedback">Feedback</option>
+                                <option value="employment">Employment</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <!-- Message -->
+                        <div>
+                            <label for="message" class="block text-burgundy font-semibold mb-2">Message *</label>
+                            <textarea 
+                                id="message" 
+                                name="message" 
+                                rows="5"
+                                required
+                                placeholder="Tell us what's on your mind..."
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-burgundy"></textarea>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button 
+                            type="submit" 
+                            class="w-full bg-burgundy text-white py-3 rounded-lg font-semibold hover:bg-red-900 transition">
+                            Send Message
+                        </button>
+                    </form>
+
+                    <!-- Success Message -->
+                    <div id="contact-success-message" class="hidden mt-6 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg">
+                        <strong>Thank you!</strong> Your message has been sent. We'll get back to you soon.
+                    </div>
+                </div>
+
+                <!-- Map and Hours -->
+                <div class="space-y-8">
+                    <!-- Map Placeholder -->
+                    <div>
+                        <h3 class="text-2xl font-bold text-burgundy mb-4">Location</h3>
+                        <div class="bg-gradient-to-br from-gray-300 to-gray-400 h-64 rounded-lg shadow-lg flex items-center justify-center">
+                            <div class="text-center text-gray-700">
+                                <span class="text-6xl mb-3 block">🗺️</span>
+                                <p class="font-semibold">Map View</p>
+                                <p class="text-sm">123 Culinary Lane, Downtown</p>
+                            </div>
+                        </div>
+                        <a href="#" class="inline-block mt-4 text-gold font-semibold hover:underline">Get Directions →</a>
+                    </div>
+
+                    <!-- Hours -->
+                    <div class="bg-cream p-6 rounded-lg shadow-lg">
+                        <h3 class="text-2xl font-bold text-burgundy mb-4">Operating Hours</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="font-semibold text-gray-700">Monday - Thursday</span>
+                                <span class="text-gray-700">5:00 PM - 10:00 PM</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="font-semibold text-gray-700">Friday - Saturday</span>
+                                <span class="text-gray-700">5:00 PM - 11:00 PM</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="font-semibold text-gray-700">Sunday</span>
+                                <span class="text-gray-700">4:00 PM - 9:00 PM</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-20 bg-cream">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <h2 class="text-4xl font-bold text-burgundy text-center mb-12">Frequently Asked Questions</h2>
+            
+            <div class="space-y-4">
+                <!-- FAQ 1 -->
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <button class="faq-question w-full text-left flex justify-between items-center">
+                        <h3 class="text-xl font-bold text-burgundy">Do you accommodate dietary restrictions?</h3>
+                        <span class="text-2xl text-gold">+</span>
+                    </button>
+                    <div class="faq-answer hidden mt-4 text-gray-700">
+                        <p>Absolutely! We accommodate vegetarian, vegan, gluten-free, and other dietary needs. Please inform us when making your reservation or notify your server.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <button class="faq-question w-full text-left flex justify-between items-center">
+                        <h3 class="text-xl font-bold text-burgundy">Is there a dress code?</h3>
+                        <span class="text-2xl text-gold">+</span>
+                    </button>
+                    <div class="faq-answer hidden mt-4 text-gray-700">
+                        <p>We recommend smart casual attire. While we don't enforce a strict dress code, most guests dress elegantly to match our refined atmosphere.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <button class="faq-question w-full text-left flex justify-between items-center">
+                        <h3 class="text-xl font-bold text-burgundy">Can I host a private event?</h3>
+                        <span class="text-2xl text-gold">+</span>
+                    </button>
+                    <div class="faq-answer hidden mt-4 text-gray-700">
+                        <p>Yes! We offer private dining for groups of 15-50 guests. Contact us at events@letitlinger.com for more information about customized menus and arrangements.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <button class="faq-question w-full text-left flex justify-between items-center">
+                        <h3 class="text-xl font-bold text-burgundy">Do you offer gift cards?</h3>
+                        <span class="text-2xl text-gold">+</span>
+                    </button>
+                    <div class="faq-answer hidden mt-4 text-gray-700">
+                        <p>Yes! Gift cards are available in any denomination. They can be purchased in-person or by calling us at (555) 123-4567.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 5 -->
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <button class="faq-question w-full text-left flex justify-between items-center">
+                        <h3 class="text-xl font-bold text-burgundy">Is parking available?</h3>
+                        <span class="text-2xl text-gold">+</span>
+                    </button>
+                    <div class="faq-answer hidden mt-4 text-gray-700">
+                        <p>Yes, complimentary valet parking is available during dinner service. Street parking and nearby parking garages are also options.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Media Section -->
+    <section class="py-20 bg-burgundy text-white">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold mb-6 text-gold">Follow Our Journey</h2>
+            <p class="text-xl text-cream mb-8">Stay updated with our latest dishes, events, and special offers</p>
+            <div class="flex justify-center space-x-8">
+                <a href="#" class="transform hover:scale-110 transition">
+                    <span class="text-6xl">📘</span>
+                    <p class="mt-2 text-sm">Facebook</p>
+                </a>
+                <a href="#" class="transform hover:scale-110 transition">
+                    <span class="text-6xl">📷</span>
+                    <p class="mt-2 text-sm">Instagram</p>
+                </a>
+                <a href="#" class="transform hover:scale-110 transition">
+                    <span class="text-6xl">🐦</span>
+                    <p class="mt-2 text-sm">Twitter</p>
+                </a>
+                <a href="#" class="transform hover:scale-110 transition">
+                    <span class="text-6xl">📺</span>
+                    <p class="mt-2 text-sm">YouTube</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8 text-center md:text-left">
+                <div>
+                    <h4 class="text-2xl font-bold text-gold mb-4">Let It Linger</h4>
+                    <p class="text-gray-400">Fine dining experience where memories are made.</p>
+                </div>
+                <div>
+                    <h5 class="text-lg font-semibold mb-4">Quick Links</h5>
+                    <div class="space-y-2">
+                        <a href="menu.html" class="block text-gray-400 hover:text-gold transition">Menu</a>
+                        <a href="reservations.html" class="block text-gray-400 hover:text-gold transition">Reservations</a>
+                        <a href="contact.html" class="block text-gray-400 hover:text-gold transition">Contact</a>
+                    </div>
+                </div>
+                <div>
+                    <h5 class="text-lg font-semibold mb-4">Follow Us</h5>
+                    <div class="flex justify-center md:justify-start space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-gold transition text-2xl">📘</a>
+                        <a href="#" class="text-gray-400 hover:text-gold transition text-2xl">📷</a>
+                        <a href="#" class="text-gray-400 hover:text-gold transition text-2xl">🐦</a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Let It Linger Restaurant. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Quick Nav (subtle) -->
+    <div class="circular-nav" aria-label="Quick navigation">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="floating-nav">☰</button>
+        <div class="nav-items" id="floating-nav" role="menu" aria-hidden="true">
+            <a href="index.html" class="nav-item" role="menuitem" title="Home">🏠</a>
+            <a href="about.html" class="nav-item" role="menuitem" title="About">👤</a>
+            <a href="menu.html" class="nav-item" role="menuitem" title="Menu">📋</a>
+            <a href="gallery.html" class="nav-item" role="menuitem" title="Gallery">🖼️</a>
+            <a href="reservations.html" class="nav-item" role="menuitem" title="Reservations">📅</a>
+            <a href="contact.html" class="nav-item" role="menuitem" title="Contact">📧</a>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/script.js"></script>
+    <script>
+        // Floating quick-nav behavior (accessible)
+        (function(){
+            const root = document.querySelector('.circular-nav');
+            if (!root) return;
+            const toggle = root.querySelector('.nav-toggle');
+            const items = root.querySelector('.nav-items');
+            toggle.addEventListener('click', function(e) {
+                const open = root.classList.toggle('open');
+                toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+                items.setAttribute('aria-hidden', open ? 'false' : 'true');
+                e.stopPropagation();
+            });
+            document.addEventListener('click', function(e){
+                if (!root.contains(e.target)) {
+                    root.classList.remove('open');
+                    toggle.setAttribute('aria-expanded','false');
+                    items.setAttribute('aria-hidden','true');
+                }
+            });
+            document.addEventListener('keydown', function(e){
+                if (e.key === 'Escape') { root.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); items.setAttribute('aria-hidden','true'); }
+            });
+        })();
+    </script>
+</body>
+</html>

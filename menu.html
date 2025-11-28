@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - Let It Linger</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        burgundy: '#800020',
+                        cream: '#F5F5DC',
+                        gold: '#D4AF37'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Floating quick-nav (subtle and consistent) */
+        .circular-nav {
+            position: fixed;
+            right: 24px;
+            bottom: 24px;
+            width: 56px;
+            height: 56px;
+            background: rgba(128,0,32,0.95);
+            color: #F5F5DC;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+            transition: transform .22s ease, box-shadow .22s ease;
+            z-index: 1000;
+        }
+
+        .circular-nav:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.22); }
+
+        .nav-toggle { font-size: 20px; font-weight: 700; background: transparent; border: none; color: inherit; cursor: pointer; }
+
+        .nav-items { position: absolute; bottom: 74px; right: 0; display: flex; flex-direction: column; gap: 10px; align-items: flex-end; opacity: 0; transform: translateY(6px) scale(.98); transition: opacity .22s ease, transform .22s ease; pointer-events: none; }
+        .circular-nav.open .nav-items { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+
+        .nav-item { width: 44px; height: 44px; border-radius: 10px; background: #fff; color: #800020; display:flex; align-items:center; justify-content:center; text-decoration:none; box-shadow: 0 6px 14px rgba(0,0,0,0.12); font-size: 18px; transition: all 0.2s ease; }
+        .nav-item:hover { background: #D4AF37; color: #800020; transform: translateX(-4px); }
+    </style>
+</head>
+<body class="font-sans text-gray-800">
+    <!-- Navigation -->
+    <nav class="bg-burgundy text-white fixed w-full z-50 shadow-lg">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="text-2xl font-bold text-gold">Let It Linger</div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="hover:text-gold transition">Home</a>
+                    <a href="about.html" class="hover:text-gold transition">About</a>
+                    <a href="menu.html" class="hover:text-gold transition border-b-2 border-gold">Menu</a>
+                    <a href="gallery.html" class="hover:text-gold transition">Gallery</a>
+                    <a href="reservations.html" class="hover:text-gold transition">Reservations</a>
+                    <a href="contact.html" class="hover:text-gold transition">Contact</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4">
+                <a href="index.html" class="block py-2 hover:text-gold transition">Home</a>
+                <a href="about.html" class="block py-2 hover:text-gold transition">About</a>
+                <a href="menu.html" class="block py-2 hover:text-gold transition">Menu</a>
+                <a href="gallery.html" class="block py-2 hover:text-gold transition">Gallery</a>
+                <a href="reservations.html" class="block py-2 hover:text-gold transition">Reservations</a>
+                <a href="contact.html" class="block py-2 hover:text-gold transition">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="bg-gradient-to-r from-burgundy to-red-900 text-white pt-32 pb-20">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-5xl md:text-6xl font-bold mb-4">Our Menu</h1>
+            <p class="text-xl text-cream">Culinary excellence in every dish</p>
+        </div>
+    </section>
+
+    <!-- Menu Filter -->
+    <section class="py-8 bg-cream sticky top-20 z-40">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-wrap justify-center gap-4">
+                <button class="menu-filter-btn bg-burgundy text-white px-6 py-2 rounded-full font-semibold hover:bg-red-900 transition" data-category="all">All</button>
+                <button class="menu-filter-btn bg-white text-burgundy px-6 py-2 rounded-full font-semibold hover:bg-burgundy hover:text-white transition" data-category="appetizers">Appetizers</button>
+                <button class="menu-filter-btn bg-white text-burgundy px-6 py-2 rounded-full font-semibold hover:bg-burgundy hover:text-white transition" data-category="mains">Main Courses</button>
+                <button class="menu-filter-btn bg-white text-burgundy px-6 py-2 rounded-full font-semibold hover:bg-burgundy hover:text-white transition" data-category="desserts">Desserts</button>
+                <button class="menu-filter-btn bg-white text-burgundy px-6 py-2 rounded-full font-semibold hover:bg-burgundy hover:text-white transition" data-category="drinks">Drinks</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Items -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6 max-w-6xl">
+            
+            <!-- Appetizers -->
+            <div class="menu-category mb-16" data-category="appetizers">
+                <h2 class="text-4xl font-bold text-burgundy mb-8 text-center">Appetizers</h2>
+                <div class="space-y-6">
+                    <div class="menu-item bg-cream p-6 rounded-lg shadow hover:shadow-lg transition">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-2xl font-bold text-burgundy">Foie Gras Terrine</h3>
+                            <span class="text-xl font-bold text-gold">$28</span>
+                        </div>
+                        <p class="text-gray-700">Silky smooth foie gras with brioche toast, cherry compote, and aged balsamic</p>
+                    </div>
+                    
+                    <div class="menu-item bg-cream p-6 rounded-lg shadow hover:shadow-lg transition">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-2xl font-bold text-burgundy">Tuna Tartare</h3>
+                            <span class="text-xl font-bold text-gold">$24</span>
+                        </div>
+                        <p class="text-gray-700">Sushi-grade yellowfin tuna, avocado, sesame, crispy wonton chips</p>
+                    </div>
+                    
+                    <div class="menu-item bg-cream p-6 rounded-lg shadow hover:shadow-lg transition">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-2xl font-bold text-burgundy">Burrata & Heirloom Tomatoes</h3>
+                            <span class="text-xl font-bold text-gold">$22</span>
+                        </div>
+                        <p class="text-gray-700">Creamy burrata, heritage tomatoes, basil pesto, aged balsamic pearls</p>
+                    </div>
+                    
+                    <div class="menu-item bg-cream p-6 rounded-lg shadow hover:shadow-lg transition">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-2xl font-bold text-burgundy">Escargot de Bourgogne</h3>
+                            <span class="text-xl font-bold text-gold">$26</span>
+                        </div>
+                        <p class="text-gray-700">Classic snails in garlic-parsley butter with crusty baguette</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Courses -->
+            <div class="menu-category mb-16" data-category="mains">
+                <h2 class="text-4xl font-bold text-burgundy mb-8 text-center">Main Courses</h2>
+                <div class="space-y-6">
+                    <div class="menu-item bg-cream p-6 rounded-lg shadow hover:shadow-lg transition">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-2xl font-bold text-burgundy">Dry-Aged Ribeye</h3>
+                            <span class="text-xl font-bold text-gold">$68</span>
+                        </div>
+                        <p class="text-gray-700">28-day aged USDA Prime ribeye, truffle butter, roasted garlic, seasonal vegetables</p>
+                    </div>
+                    
+                    <div class="menu-item bg-cream p-6 rounded-lg shadow hover:shadow-lg transition">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-2xl font-bold text-burgundy">Lobster Thermidor</h3>
+                            <span class="text-xl font-bold text-gold">$72</span>
+                        </div>
+                        <p class="text-gray-700">Whole lobster with cognac cream sauce, Gruyère, herb risotto</p>
+                    </div>
+                    
+                    <div class="menu-item bg-cream p-6 rounded-lg shadow hover:shadow-lg transition">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-2xl font-bold text-burgundy">Duck Confit</h3>
+                            <span class="text-xl font-bold text-gold">$54</span>
+                        </div>
+                        <p class="text-gray-700">Crispy duck leg, orange gastrique, potato gratin, seasonal greens</p>
+                    </div>
+                    
+                    <div class="menu-item bg-cream p-6 rounded-lg shadow hover:shadow-lg transition">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-2xl font-bold text-burgundy">Pan-Seared Sea Bass</h3>
+                            <span class="text-xl font-bold text-gold">$58</span>
+                        </div>
+                        <p class="text-gray-700">Mediterranean sea bass, lemon beurre blanc, asparagus, fingerling potatoes</p>
+                    </div>
+                    
+                    <div class="menu-item bg-cream p-6 rounded-lg shadow hover:shadow-lg transition">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-2xl font-bold text-burgundy">Rack of Lamb</h3>
+                            <span class="text-xl font-bold text-gold">$64</span>
+                        </div>
+                        <p class="text-gray-700">Herb-crusted New Zealand lamb, mint chimichurri, ratatouille</p>
+                    </div>
+                    
+                    <div class="menu-item bg-cream p-6 rounded-lg shadow hover:shadow-lg transition">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-2xl font-bold text-burgundy">Wild Mushroom Risotto <span class="text-sm">(V)</span></h3>
+                            <span class="text-xl font-bold text-gold">$42</span>
+                        </div>
+                        <p class="text-gray-700">Creamy Arborio rice, porcini, truffle oil, Parmigiano-Reggiano</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Desserts -->
+            <div class="menu-category mb-16" data-category="desserts">
+                <h2 class="text-4xl font-bold text-burgundy mb-8 text-center">Desserts</h2>
+                <div class="space-y-6">
+                    <div class="menu-item bg-cream p-6 rounded-lg shadow hover:shadow-lg transition">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-2xl font-bold text-burgundy">Chocolate Soufflé</h3>
+                            <span class="text-xl font-bold text-gold">$18</span>
+                        </div>
+                        <p class="text-gray-700">Warm dark chocolate soufflé, vanilla bean ice cream, berry coulis</p>
+                    </div>
+                    
+                    <div class="menu-item bg-cream p-6 rounded-lg shadow hover:shadow-lg transition">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-2xl font-bold text-burgundy">Crème Brûlée</h3>
+                            <span class="text-xl font-bold text-gold">$14</span>
+                        </div>
+                        <p class="text-gray-700">Classic vanilla custard with caramelized sugar, fresh berries</p>
+                    </div>
+                    
+                    <div class="menu-item bg-cream p-6 rounded-lg shadow hover:shadow-lg transition">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-2xl font-bold text-burgundy">Tiramisu</h3>
+                            <span class="text-xl font-bold text-gold">$16</span>
+                        </div>
+                        <p class="text-gray-700">Traditional Italian mascarpone, espresso-soaked ladyfingers, cocoa</p>
+                    </div>
+                    
+                    <div class="menu-item bg-cream p-6 rounded-lg shadow hover:shadow-lg transition">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-2xl font-bold text-burgundy">Lemon Tart</h3>
+                            <span class="text-xl font-bold text-gold">$15</span>
+                        </div>
+                        <p class="text-gray-700">Tangy lemon curd, buttery shortbread crust, raspberry sorbet</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Drinks -->
+            <div class="menu-category" data-category="drinks">
+                <h2 class="text-4xl font-bold text-burgundy mb-8 text-center">Signature Drinks</h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="menu-item bg-cream p-6 rounded-lg shadow hover:shadow-lg transition">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold text-burgundy">Lingering Sunset</h3>
+                            <span class="text-lg font-bold text-gold">$16</span>
+                        </div>
+                        <p class="text-gray-700">Aperol, prosecco, blood orange, sparkling water</p>
+                    </div>
+                    
+                    <div class="menu-item bg-cream p-6 rounded-lg shadow hover:shadow-lg transition">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold text-burgundy">Midnight in Paris</h3>
+                            <span class="text-lg font-bold text-gold">$18</span>
+                        </div>
+                        <p class="text-gray-700">Cognac, lavender, champagne, lemon twist</p>
+                    </div>
+                    
+                    <div class="menu-item bg-cream p-6 rounded-lg shadow hover:shadow-lg transition">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold text-burgundy">Garden Elixir</h3>
+                            <span class="text-lg font-bold text-gold">$14</span>
+                        </div>
+                        <p class="text-gray-700">Cucumber, mint, elderflower, gin, tonic</p>
+                    </div>
+                    
+                    <div class="menu-item bg-cream p-6 rounded-lg shadow hover:shadow-lg transition">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold text-burgundy">Smoky Old Fashioned</h3>
+                            <span class="text-lg font-bold text-gold">$17</span>
+                        </div>
+                        <p class="text-gray-700">Smoked whiskey, maple, bitters, orange peel</p>
+                    </div>
+                </div>
+                
+                <div class="mt-8 text-center">
+                    <p class="text-gray-700 text-lg">Extensive wine list available upon request</p>
+                    <p class="text-gray-600">Wine pairings available for $45 per person</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-burgundy text-white text-center">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold mb-6 text-gold">Ready to Experience Our Menu?</h2>
+            <p class="text-xl mb-8 text-cream">Reserve your table today</p>
+            <a href="reservations.html" class="bg-gold text-burgundy px-8 py-3 rounded-full font-semibold hover:bg-yellow-500 transition inline-block">Make a Reservation</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8 text-center md:text-left">
+                <div>
+                    <h4 class="text-2xl font-bold text-gold mb-4">Let It Linger</h4>
+                    <p class="text-gray-400">Fine dining experience where memories are made.</p>
+                </div>
+                <div>
+                    <h5 class="text-lg font-semibold mb-4">Quick Links</h5>
+                    <div class="space-y-2">
+                        <a href="menu.html" class="block text-gray-400 hover:text-gold transition">Menu</a>
+                        <a href="reservations.html" class="block text-gray-400 hover:text-gold transition">Reservations</a>
+                        <a href="contact.html" class="block text-gray-400 hover:text-gold transition">Contact</a>
+                    </div>
+                </div>
+                <div>
+                    <h5 class="text-lg font-semibold mb-4">Follow Us</h5>
+                    <div class="flex justify-center md:justify-start space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-gold transition text-2xl">📘</a>
+                        <a href="#" class="text-gray-400 hover:text-gold transition text-2xl">📷</a>
+                        <a href="#" class="text-gray-400 hover:text-gold transition text-2xl">🐦</a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Let It Linger Restaurant. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Quick Nav (subtle) -->
+    <div class="circular-nav" aria-label="Quick navigation">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="floating-nav">☰</button>
+        <div class="nav-items" id="floating-nav" role="menu" aria-hidden="true">
+            <a href="index.html" class="nav-item" role="menuitem" title="Home">🏠</a>
+            <a href="about.html" class="nav-item" role="menuitem" title="About">👤</a>
+            <a href="menu.html" class="nav-item" role="menuitem" title="Menu">📋</a>
+            <a href="gallery.html" class="nav-item" role="menuitem" title="Gallery">🖼️</a>
+            <a href="reservations.html" class="nav-item" role="menuitem" title="Reservations">📅</a>
+            <a href="contact.html" class="nav-item" role="menuitem" title="Contact">📧</a>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/script.js"></script>
+    <script>
+        // Floating quick-nav behavior (accessible)
+        (function(){
+            const root = document.querySelector('.circular-nav');
+            if (!root) return;
+            const toggle = root.querySelector('.nav-toggle');
+            const items = root.querySelector('.nav-items');
+            toggle.addEventListener('click', function(e) {
+                const open = root.classList.toggle('open');
+                toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+                items.setAttribute('aria-hidden', open ? 'false' : 'true');
+                e.stopPropagation();
+            });
+            document.addEventListener('click', function(e){
+                if (!root.contains(e.target)) {
+                    root.classList.remove('open');
+                    toggle.setAttribute('aria-expanded','false');
+                    items.setAttribute('aria-hidden','true');
+                }
+            });
+            document.addEventListener('keydown', function(e){
+                if (e.key === 'Escape') { root.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); items.setAttribute('aria-hidden','true'); }
+            });
+        })();
+    </script>
+</body>
+</html>

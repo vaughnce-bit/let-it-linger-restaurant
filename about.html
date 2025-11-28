@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Let It Linger</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        burgundy: '#800020',
+                        cream: '#F5F5DC',
+                        gold: '#D4AF37'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Floating quick-nav (subtle and consistent) */
+        .circular-nav {
+            position: fixed;
+            right: 24px;
+            bottom: 24px;
+            width: 56px;
+            height: 56px;
+            background: rgba(128,0,32,0.95);
+            color: #F5F5DC;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+            transition: transform .22s ease, box-shadow .22s ease;
+            z-index: 1000;
+        }
+
+        .circular-nav:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.22); }
+
+        .nav-toggle { font-size: 20px; font-weight: 700; background: transparent; border: none; color: inherit; cursor: pointer; }
+
+        .nav-items { position: absolute; bottom: 74px; right: 0; display: flex; flex-direction: column; gap: 10px; align-items: flex-end; opacity: 0; transform: translateY(6px) scale(.98); transition: opacity .22s ease, transform .22s ease; pointer-events: none; }
+        .circular-nav.open .nav-items { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+
+        .nav-item { width: 44px; height: 44px; border-radius: 10px; background: #fff; color: #800020; display:flex; align-items:center; justify-content:center; text-decoration:none; box-shadow: 0 6px 14px rgba(0,0,0,0.12); font-size: 18px; transition: all 0.2s ease; }
+        .nav-item:hover { background: #D4AF37; color: #800020; transform: translateX(-4px); }
+    </style>
+</head>
+<body class="font-sans text-gray-800">
+    <!-- Navigation -->
+    <nav class="bg-burgundy text-white fixed w-full z-50 shadow-lg">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="text-2xl font-bold text-gold">Let It Linger</div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="hover:text-gold transition">Home</a>
+                    <a href="about.html" class="hover:text-gold transition border-b-2 border-gold">About</a>
+                    <a href="menu.html" class="hover:text-gold transition">Menu</a>
+                    <a href="gallery.html" class="hover:text-gold transition">Gallery</a>
+                    <a href="reservations.html" class="hover:text-gold transition">Reservations</a>
+                    <a href="contact.html" class="hover:text-gold transition">Contact</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4">
+                <a href="index.html" class="block py-2 hover:text-gold transition">Home</a>
+                <a href="about.html" class="block py-2 hover:text-gold transition">About</a>
+                <a href="menu.html" class="block py-2 hover:text-gold transition">Menu</a>
+                <a href="gallery.html" class="block py-2 hover:text-gold transition">Gallery</a>
+                <a href="reservations.html" class="block py-2 hover:text-gold transition">Reservations</a>
+                <a href="contact.html" class="block py-2 hover:text-gold transition">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="bg-gradient-to-r from-burgundy to-red-900 text-white pt-32 pb-20">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-5xl md:text-6xl font-bold mb-4">Our Story</h1>
+            <p class="text-xl text-cream">A passion for food, a commitment to excellence</p>
+        </div>
+    </section>
+
+    <!-- Story Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
+                    <div>
+                        <h2 class="text-4xl font-bold text-burgundy mb-6">The Beginning</h2>
+                        <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                            Let It Linger was born from a simple belief: dining should be an experience, 
+                            not just a meal. Founded in 2015 by Chef Isabella Martinez, our restaurant 
+                            has become a destination for those who appreciate the finer things in life.
+                        </p>
+                        <p class="text-lg text-gray-700 leading-relaxed">
+                            Every dish tells a story, every ingredient is carefully sourced, and every 
+                            moment is designed to be savored. We believe that great food deserves time, 
+                            conversation, and connection.
+                        </p>
+                    </div>
+                    <div class="bg-gradient-to-br from-burgundy to-red-800 h-80 rounded-lg flex items-center justify-center">
+                        <span class="text-white text-8xl">🏛️</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Philosophy Section -->
+    <section class="py-20 bg-cream">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto text-center mb-12">
+                <h2 class="text-4xl font-bold text-burgundy mb-6">Our Philosophy</h2>
+                <p class="text-lg text-gray-700 leading-relaxed">
+                    We believe in the power of food to bring people together, create memories, 
+                    and celebrate life's special moments.
+                </p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="bg-white p-8 rounded-lg shadow-lg text-center">
+                    <div class="text-5xl mb-4">🌱</div>
+                    <h3 class="text-2xl font-bold text-burgundy mb-3">Fresh & Local</h3>
+                    <p class="text-gray-700">We partner with local farms to source the freshest seasonal ingredients.</p>
+                </div>
+                <div class="bg-white p-8 rounded-lg shadow-lg text-center">
+                    <div class="text-5xl mb-4">👨‍🍳</div>
+                    <h3 class="text-2xl font-bold text-burgundy mb-3">Culinary Artistry</h3>
+                    <p class="text-gray-700">Each plate is crafted with precision, creativity, and passion.</p>
+                </div>
+                <div class="bg-white p-8 rounded-lg shadow-lg text-center">
+                    <div class="text-5xl mb-4">💛</div>
+                    <h3 class="text-2xl font-bold text-burgundy mb-3">Warm Hospitality</h3>
+                    <p class="text-gray-700">We treat every guest like family, ensuring a memorable experience.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chef Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="h-96 rounded-lg overflow-hidden order-2 md:order-1">
+                        <img src="media/chef-issabella.jpg" alt="Chef Isabella Martinez" class="w-full h-full object-cover" loading="lazy" decoding="async">
+                    </div>
+                    <div class="order-1 md:order-2">
+                        <h2 class="text-4xl font-bold text-burgundy mb-6">Meet Chef Isabella</h2>
+                        <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                            Chef Isabella Martinez trained at Le Cordon Bleu in Paris and worked in 
+                            Michelin-starred restaurants across Europe before returning home to create 
+                            Let It Linger.
+                        </p>
+                        <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                            Her philosophy combines classical French techniques with bold, modern flavors 
+                            inspired by her Mediterranean heritage. She believes that cooking is an act 
+                            of love, and every dish should tell a story.
+                        </p>
+                        <p class="text-lg text-gray-700 leading-relaxed italic">
+                            "Food is memory. When you taste something truly special, it stays with you 
+                            long after the meal is over." - Chef Isabella Martinez
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Awards Section -->
+    <section class="py-20 bg-burgundy text-white">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-4xl font-bold mb-12 text-gold">Awards & Recognition</h2>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div>
+                        <div class="text-6xl mb-4">🏆</div>
+                        <h3 class="text-xl font-bold mb-2">Best New Restaurant 2016</h3>
+                        <p class="text-cream">City Dining Awards</p>
+                    </div>
+                    <div>
+                        <div class="text-6xl mb-4">⭐</div>
+                        <h3 class="text-xl font-bold mb-2">Michelin Guide 2020</h3>
+                        <p class="text-cream">One Star Recognition</p>
+                    </div>
+                    <div>
+                        <div class="text-6xl mb-4">🍷</div>
+                        <h3 class="text-xl font-bold mb-2">Wine Spectator Award</h3>
+                        <p class="text-cream">Excellence in Wine Service</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- JavaScript -->
+    <script src="js/script.js"></script>
+    <script>
+        // Floating quick-nav behavior (accessible)
+        (function(){
+            const root = document.querySelector('.circular-nav');
+            if (!root) return;
+            const toggle = root.querySelector('.nav-toggle');
+            const items = root.querySelector('.nav-items');
+            toggle.addEventListener('click', function(e) {
+                const open = root.classList.toggle('open');
+                toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+                items.setAttribute('aria-hidden', open ? 'false' : 'true');
+                e.stopPropagation();
+            });
+            document.addEventListener('click', function(e){
+                if (!root.contains(e.target)) {
+                    root.classList.remove('open');
+                    toggle.setAttribute('aria-expanded','false');
+                    items.setAttribute('aria-hidden','true');
+                }
+            });
+            document.addEventListener('keydown', function(e){
+                if (e.key === 'Escape') { root.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); items.setAttribute('aria-hidden','true'); }
+            });
+        })();
+    </script>
+</body>
+</html>
